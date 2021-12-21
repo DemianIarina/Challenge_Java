@@ -5,11 +5,12 @@ package com.company.Entities;
  * It contains a integer unique identifier and a name
  */
 public class Item {
+    private static int count = 100;
     private int identifier;
     private String name;
 
-    public Item(int identifier, String name) {
-        this.identifier = identifier;
+    public Item(String name) {
+        setIdentifier(++count);
         this.name = name;
     }
 

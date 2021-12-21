@@ -11,7 +11,7 @@ import java.util.Date;
  * He also has one letter
  */
 public class Child {
-    private String firstName;
+    private String firstName;  //TODO:
     private String lastName;
     private Date dateOfBirth;
     private String address;   //TODO clasa Adress maybe
