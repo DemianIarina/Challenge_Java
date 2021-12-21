@@ -4,43 +4,32 @@ import java.util.Date;
 
 /**
  * Represents a child in Santa Claus tracking system
- * He can be uniquely identified through his first and last name,
- * a date of birth, address
- * The child object also contains information about his behavoiur
+ * He can be uniquely identified through name, date of birth and address
+ * The child object also contains information about his behaviour
  * (if he was good or bad)
  * He also has one letter
  */
 public class Child {
-    private String firstName;  //TODO:
-    private String lastName;
+    private String name;
     private Date dateOfBirth;
-    private String address;   //TODO clasa Adress maybe
+    private String address;
     private BehaviorEnum behaviorEnum;
     private Letter letter;
 
-    public Child(String firstName, String lastName, Date dateOfBirth, String address, BehaviorEnum behaviorEnum, Letter letter) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Child(String firstName, Date dateOfBirth, String address, BehaviorEnum behaviorEnum, Letter letter) {
+        this.name = firstName;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.behaviorEnum = behaviorEnum;
         this.letter = letter;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDateOfBirth() {
@@ -78,8 +67,7 @@ public class Child {
     @Override
     public String toString() {
         return "Child{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "firstName='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", address='" + address + '\'' +
                 ", behaviorEnum=" + behaviorEnum +

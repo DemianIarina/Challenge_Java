@@ -43,11 +43,11 @@ public class Program {
         Letter letter1_2 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-11"), List.of(item3, item4));
         Letter letter1_3 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-15"), List.of(item5, item6));
 
-        Child child1 = new Child("Ion", "Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
+        Child child1 = new Child("Ion Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
                 "str.Somesului, nr. 2B, Cluj-Napoca, Romania", BehaviorEnum.GOOD, letter1_1);
-        Child child2 = new Child("Maria", "Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2007-5-6"),
+        Child child2 = new Child("Maria Pop" , new SimpleDateFormat("yyyy-MM-dd").parse("2007-5-6"),
                 "Cluj-Napoca, str.Somesului, nr. 2B", BehaviorEnum.GOOD, letter1_2);
-        Child child3 = new Child("Giorgi", "Mihalache",  new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
+        Child child3 = new Child("Giorgi Mihalache",  new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
                 "Floresti, str. Eroilor, nr. 123", BehaviorEnum.BAD, letter1_3);
 
         System.out.println(child1);

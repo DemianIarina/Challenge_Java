@@ -2,7 +2,7 @@ package com.company.Entities;
 
 /**
  * Represents an item in a list from a letter to Santa Claus
- * It contains a integer unique identifier and a name
+ * It contains an integer unique identifier (self incremented) and a name
  */
 public class Item {
     private static int count = 100;
