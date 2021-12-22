@@ -16,8 +16,8 @@ public class Child {
     private BehaviorEnum behaviorEnum;
     private Letter letter;
 
-    public Child(String firstName, Date dateOfBirth, String address, BehaviorEnum behaviorEnum, Letter letter) {
-        this.name = firstName;
+    public Child(String name, Date dateOfBirth, String address, BehaviorEnum behaviorEnum, Letter letter) {
+        this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.behaviorEnum = behaviorEnum;
