@@ -1,14 +1,14 @@
 package com.company;
 
-import com.company.Entities.BehaviorEnum;
-import com.company.Entities.Child;
-import com.company.Entities.Item;
-import com.company.Entities.Letter;
+import com.company.Entities.*;
 import com.company.Repository.ItemRepository;
 
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +16,8 @@ import java.util.Objects;
 
 public class Program {
     public static ItemRepository itemRepository = new ItemRepository();
+    public static List<Child> childrenQ1;
+    private static int count = 0;
 
     public static void main(String[] args) throws ParseException, IOException {
         Question1();
@@ -51,9 +53,9 @@ public class Program {
         Child child3 = new Child("Giorgi Mihalache",  new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
                 "Floresti, str. Eroilor, nr. 123", BehaviorEnum.BAD, letter1_3);
 
-        List<Child> children = new ArrayList<>(List.of(child1, child2, child3));
+        childrenQ1 = new ArrayList<>(List.of(child1, child2, child3));
 
-        System.out.println(children);
+        System.out.println(childrenQ1);
 
     }
 
@@ -121,14 +123,75 @@ public class Program {
 
     }
 
+    public static void createLetterFile(Child child){
+        try {
+            count++;
+            File myObj = new File("src/com/company/letter3_"+ count+".txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+
+                Period period = Period.between(child.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now());
+                int age = period.getYears();
+
+                FileWriter myWriter = new FileWriter("src/com/company/letter3_"+ count+".txt");
+                myWriter.write("Dear Santa,\n" +
+                        "I am "+ child.getName() +" \n" +
+                        "I am " + age + " years old. I live at " + child.getAddress() + ". I have been a very " + child.getBehaviorEnum() + " child this year\n" +
+                        "What I would like the most this Christmas is:\n" +
+                        child.getLetter().getItemList().get(0).getName()+ "," + child.getLetter().getItemList().get(1).getName());
+                myWriter.close();
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    //TODO befor running the first time: delete de old files
     static void Question3()
     {
+        for(Child child :childrenQ1){
+            createLetterFile(child);
+        }
+    }
+
+    static void buildReport(Report report, File file) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        String st;
+        int contor = 0;
+        while ((st = br.readLine()) != null) {
+            contor++;
+            if (contor == 5) {
+                String present1 = st.substring(0, st.indexOf(","));
+                Item item1 = createOrGetItemFromRepository(present1);
+                String present2 = st.substring(st.indexOf(",") + 1);
+                Item item2 = createOrGetItemFromRepository(present2);
+                report.addItem(item1);
+                report.addItem(item2);
+            }
+        }
 
     }
 
-    static void Question4()
-    {
+    static void Question4() throws IOException {
 
+        Report report = new Report();
+        File file1 = new File("src/com/company/letter2_1.txt");
+        File file2 = new File("src/com/company/letter2_2.txt");
+        File file3 = new File("src/com/company/letter2_3.txt");
+        File file4 = new File("src/com/company/letter3_1.txt");
+        File file5 = new File("src/com/company/letter3_2.txt");
+        File file6 = new File("src/com/company/letter3_3.txt");
+        buildReport(report,file1);
+        buildReport(report,file2);
+        buildReport(report,file3);
+        buildReport(report,file4);
+        buildReport(report,file5);
+        buildReport(report,file6);
+        System.out.println(report);
     }
 
     static void Question5()
