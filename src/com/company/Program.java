@@ -64,6 +64,74 @@ public class Program {
 
     }
 
+    static void Question2() throws IOException, ParseException {
+        List<Child> readChildren = new ArrayList<>();
+
+        File file1 = new File("src/com/company/letter2_1.txt");
+        readChildren.add(createObjectsFromFile(file1));
+        File file2 = new File("src/com/company/letter2_2.txt");
+        readChildren.add(createObjectsFromFile(file2));
+        File file3 = new File("src/com/company/letter2_3.txt");
+        readChildren.add(createObjectsFromFile(file3));
+
+       readChildren.forEach(child -> System.out.println(child.getName()));
+    }
+
+    //TODO befor running the first time: delete de old files
+    static void Question3()
+    {
+        for(Child child :childrenQ1){
+            createLetterFile(child);
+        }
+    }
+
+    static void Question4() throws IOException {
+
+        Report report = new Report();
+        File file1 = new File("src/com/company/letter2_1.txt");
+        File file2 = new File("src/com/company/letter2_2.txt");
+        File file3 = new File("src/com/company/letter2_3.txt");
+        File file4 = new File("src/com/company/letter3_1.txt");
+        File file5 = new File("src/com/company/letter3_2.txt");
+        File file6 = new File("src/com/company/letter3_3.txt");
+        buildReport(report,file1);
+        buildReport(report,file2);
+        buildReport(report,file3);
+        buildReport(report,file4);
+        buildReport(report,file5);
+        buildReport(report,file6);
+        System.out.println(report);
+    }
+
+    static void Question5()
+    {
+        /*
+        In the current implementation we can apply Singleton Pattern to SantaClause class, because we only need one
+        Santa for the whole lifetime of the application, with his one list of children from all over the world.
+        In this implementation multithreading is not used, so we will not have the complications of singleton in a multithread
+        environment (we don't need to take care of multithreading creating singleton object several times)
+         */
+    }
+
+
+    static void Question6()
+    {
+        List<String> travelItinerary = new ArrayList<>();
+        for(Child child: santaClaus.getChildren()){
+            String address = child.getAddress();
+            travelItinerary.add(address);
+        }
+        List<String> travelItinerarySorted = travelItinerary.stream()
+                .distinct()
+                .collect(groupingBy(elem -> elem.substring(elem.indexOf(", ", elem.indexOf(", ")+2)+2),LinkedHashMap::new, toList()))
+                .values().stream()
+                .flatMap(Collection::stream)
+                .collect(toList());
+
+        System.out.println(travelItinerarySorted);
+
+    }
+
     public static Item createOrGetItemFromRepository(String presentName){
         if(itemRepository.getAll().stream()
                 .noneMatch(item -> Objects.equals(item.getName(), presentName))){
@@ -131,19 +199,6 @@ public class Program {
         return new Child(name,exactBirthDate, address, behaviorEnum, letter);
     }
 
-    static void Question2() throws IOException, ParseException {
-        List<Child> readChildren = new ArrayList<>();
-
-        File file1 = new File("src/com/company/letter2_1.txt");
-        readChildren.add(createObjectsFromFile(file1));
-        File file2 = new File("src/com/company/letter2_2.txt");
-        readChildren.add(createObjectsFromFile(file2));
-        File file3 = new File("src/com/company/letter2_3.txt");
-        readChildren.add(createObjectsFromFile(file3));
-
-       readChildren.forEach(child -> System.out.println(child.getName()));
-    }
-
     public static void createLetterFile(Child child){
         try {
             count++;
@@ -170,14 +225,6 @@ public class Program {
         }
     }
 
-    //TODO befor running the first time: delete de old files
-    static void Question3()
-    {
-        for(Child child :childrenQ1){
-            createLetterFile(child);
-        }
-    }
-
     static void buildReport(Report report, File file) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -194,52 +241,6 @@ public class Program {
                 report.addItem(item2);
             }
         }
-
-    }
-
-    static void Question4() throws IOException {
-
-        Report report = new Report();
-        File file1 = new File("src/com/company/letter2_1.txt");
-        File file2 = new File("src/com/company/letter2_2.txt");
-        File file3 = new File("src/com/company/letter2_3.txt");
-        File file4 = new File("src/com/company/letter3_1.txt");
-        File file5 = new File("src/com/company/letter3_2.txt");
-        File file6 = new File("src/com/company/letter3_3.txt");
-        buildReport(report,file1);
-        buildReport(report,file2);
-        buildReport(report,file3);
-        buildReport(report,file4);
-        buildReport(report,file5);
-        buildReport(report,file6);
-        System.out.println(report);
-    }
-
-    //TODO cautat mai exact
-    static void Question5()
-    {
-        /*
-        In the current implementation we can apply Singleton Pattern to SantaClause class, because it can only exist one
-        Santa for the whole lifetime of the application, with his one list of children from all over the world.
-         */
-    }
-
-
-    static void Question6()
-    {
-        List<String> travelItinerary = new ArrayList<>();
-        for(Child child: santaClaus.getChildren()){
-            String address = child.getAddress();
-            travelItinerary.add(address);
-        }
-        List<String> travelItinerarySorted = travelItinerary.stream()
-                .distinct()
-                .collect(groupingBy(elem -> elem.substring(elem.indexOf(", ", elem.indexOf(", ")+2)+2),LinkedHashMap::new, toList()))
-                .values().stream()
-                .flatMap(Collection::stream)
-                .collect(toList());
-
-        System.out.println(travelItinerarySorted);
 
     }
 

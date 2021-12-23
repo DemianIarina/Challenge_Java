@@ -10,7 +10,7 @@ public class Item {
     private String name;
 
     public Item(String name) {
-        setIdentifier(++count);
+        setIdentifier(++count);  //self incremented identifier
         this.name = name;
     }
 
