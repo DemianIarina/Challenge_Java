@@ -12,10 +12,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 public class Program {
     public static ItemRepository itemRepository = new ItemRepository();
@@ -51,11 +52,11 @@ public class Program {
         Letter letter1_3 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-15"), List.of(item5, item6));
 
         Child child1 = new Child("Ion Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
-                "str.Somesului, nr. 2B, Cluj-Napoca, Romania", BehaviorEnum.GOOD, letter1_1);
+                "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_1);
         Child child2 = new Child("Maria Pop" , new SimpleDateFormat("yyyy-MM-dd").parse("2007-5-6"),
-                "Cluj-Napoca, str.Somesului, nr. 2B, Romania", BehaviorEnum.GOOD, letter1_2);
+                "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_2);
         Child child3 = new Child("Giorgi Mihalache",  new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
-                "Floresti, str. Eroilor, nr. 123, Romania", BehaviorEnum.BAD, letter1_3);
+                "str. Eroilor, nr. 123, Floresti, Cluj, Romania", BehaviorEnum.BAD, letter1_3);
 
         childrenQ1 = new ArrayList<>(List.of(child1, child2, child3));
 
@@ -214,14 +215,31 @@ public class Program {
         System.out.println(report);
     }
 
+    //TODO cautat mai exact
     static void Question5()
     {
-
+        /*
+        In the current implementation we can apply Singleton Pattern to SantaClause class, because it can only exist one
+        Santa for the whole lifetime of the application, with his one list of children from all over the world.
+         */
     }
+
 
     static void Question6()
     {
+        List<String> travelItinerary = new ArrayList<>();
+        for(Child child: santaClaus.getChildren()){
+            String address = child.getAddress();
+            travelItinerary.add(address);
+        }
+        List<String> travelItinerarySorted = travelItinerary.stream()
+                .distinct()
+                .collect(groupingBy(elem -> elem.substring(elem.indexOf(", ", elem.indexOf(", ")+2)+2),LinkedHashMap::new, toList()))
+                .values().stream()
+                .flatMap(Collection::stream)
+                .collect(toList());
 
+        System.out.println(travelItinerarySorted);
 
     }
 

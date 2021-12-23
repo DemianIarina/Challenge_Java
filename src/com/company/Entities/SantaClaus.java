@@ -68,7 +68,7 @@ public class SantaClaus {
             children.add(newChild);
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("src/com/company/children.txt"));
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 bw.write(newChild.getName() + ";" + dateFormat.format(newChild.getDateOfBirth()) + ";" + newChild.getAddress());
                 bw.close();
 

@@ -8,6 +8,7 @@ import java.util.Date;
  * The child object also contains information about his behaviour
  * (if he was good or bad)
  * He also has one letter
+ * The address of all children will have the structure: street, number, city, county, county
  */
 public class Child {
     private String name;
