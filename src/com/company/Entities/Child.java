@@ -24,6 +24,14 @@ public class Child {
         this.letter = letter;
     }
 
+    public Child(String name, Date dateOfBirth, String address) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.behaviorEnum = null;
+        this.letter = null;
+    }
+
     public String getName() {
         return name;
     }

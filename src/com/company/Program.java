@@ -4,6 +4,9 @@ import com.company.Entities.*;
 import com.company.Repository.ItemRepository;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -18,6 +21,7 @@ public class Program {
     public static ItemRepository itemRepository = new ItemRepository();
     public static List<Child> childrenQ1;
     private static int count = 0;
+    private static final SantaClaus santaClaus = new SantaClaus();
 
     public static void main(String[] args) throws ParseException, IOException {
         Question1();
@@ -49,9 +53,9 @@ public class Program {
         Child child1 = new Child("Ion Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
                 "str.Somesului, nr. 2B, Cluj-Napoca, Romania", BehaviorEnum.GOOD, letter1_1);
         Child child2 = new Child("Maria Pop" , new SimpleDateFormat("yyyy-MM-dd").parse("2007-5-6"),
-                "Cluj-Napoca, str.Somesului, nr. 2B", BehaviorEnum.GOOD, letter1_2);
+                "Cluj-Napoca, str.Somesului, nr. 2B, Romania", BehaviorEnum.GOOD, letter1_2);
         Child child3 = new Child("Giorgi Mihalache",  new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
-                "Floresti, str. Eroilor, nr. 123", BehaviorEnum.BAD, letter1_3);
+                "Floresti, str. Eroilor, nr. 123, Romania", BehaviorEnum.BAD, letter1_3);
 
         childrenQ1 = new ArrayList<>(List.of(child1, child2, child3));
 
@@ -74,11 +78,21 @@ public class Program {
         }
     }
 
-    public static Child createObjectsFromFile(File file) throws IOException {
+    public static Child createObjectsFromFile(File file) throws IOException, ParseException {
         BufferedReader br = new BufferedReader(new FileReader(file));
+
+        //get the letter creation date
+        BasicFileAttributes attrs = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+        FileTime time = attrs.creationTime();
+
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String letterDateString = simpleDateFormat.format( new Date( time.toMillis()));
+        Date letterDate =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(letterDateString);
 
         String st;
         String name = "";
+        Date exactBirthDate = null;
         String address = "";
         String behavior = "";
         BehaviorEnum behaviorEnum = null;
@@ -91,8 +105,16 @@ public class Program {
             }
             if(contor==3){
                 String years = st.substring(st.indexOf("I am")+5, st.indexOf(" years"));
-                System.out.println(years); //TODO calculat cumva ziua de nastere - maybe daca dau in scrisoare anii exacti
                 address = st.substring(st.indexOf("I live at")+10, st.indexOf(". I have"));
+
+                //find the exact birthday of the child, identified through name and address in santas list
+                String finalName = name;
+                String finalAddress = address;
+                exactBirthDate = santaClaus.getChildren().stream()
+                        .filter(elem -> Objects.equals(elem.getName(), finalName) && Objects.equals(elem.getAddress(), finalAddress))
+                        .findFirst()
+                        .orElseThrow().getDateOfBirth();
+
                 behavior = st.substring(st.indexOf("I have been a very")+19, st.indexOf(" child this year"));
             }
             if(contor==5){
@@ -101,14 +123,14 @@ public class Program {
                 String present2 = st.substring(st.indexOf(",")+1);
                 Item item2 = createOrGetItemFromRepository(present2);
 
-                letter = new Letter(new Date(System.currentTimeMillis()), List.of(item1, item2));
+                letter = new Letter(letterDate, List.of(item1, item2));
                 behaviorEnum = BehaviorEnum.valueOf(behavior);
             }
         }
-        return new Child(name,new Date(System.currentTimeMillis()), address, behaviorEnum, letter);
+        return new Child(name,exactBirthDate, address, behaviorEnum, letter);
     }
 
-    static void Question2() throws IOException {
+    static void Question2() throws IOException, ParseException {
         List<Child> readChildren = new ArrayList<>();
 
         File file1 = new File("src/com/company/letter2_1.txt");
@@ -119,8 +141,6 @@ public class Program {
         readChildren.add(createObjectsFromFile(file3));
 
        readChildren.forEach(child -> System.out.println(child.getName()));
-
-
     }
 
     public static void createLetterFile(Child child){
@@ -201,6 +221,7 @@ public class Program {
 
     static void Question6()
     {
+
 
     }
 

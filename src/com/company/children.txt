@@ -1,0 +1,7 @@
+Ion Pop;2006-05-11;str.Somesului, nr. 2B, Cluj-Napoca, Romania
+Maria Pop;2007-5-6;str.Somesului, nr. 2B, Cluj-Napoca, Romania
+Giorgi Mihalache;2006-8-18;Floresti, str. Eroilor, nr. 123, Romania
+Monica Fleur;2012-8-24;str. Rue d'Alleray, nr. 20, Paris, Franța
+Ionica Tulea;2014-10-12;str.Constanta, nr. 45, Cluj-Napoca, Romania
+Vlad Toma;2012-6-22;str.Eroilor, nr 102, Cluj-Napoca, Romania
+Tudor Rus;2016-1-12;str.Sforii, nr.2, Brasov, Romania
