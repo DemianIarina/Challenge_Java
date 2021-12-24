@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -24,7 +23,7 @@ public class Program {
     private static int count = 0;   //used for generating unique names for the letters
     private static final SantaClaus santaClaus = new SantaClaus();
 
-    public static void main(String[] args) throws ParseException, IOException {
+    public static void main(String[] args){
         Question1();
         Question2();
         Question3();
