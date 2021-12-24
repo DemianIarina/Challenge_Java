@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toList;
 public class Program {
     public static ItemRepository itemRepository = new ItemRepository();
     public static List<Child> childrenQ1;
-    private static int count = 0;
+    private static int count = 0;   //used for generating unique names for the letters
     private static final SantaClaus santaClaus = new SantaClaus();
 
     public static void main(String[] args) throws ParseException, IOException {
@@ -33,6 +33,11 @@ public class Program {
         Question6();
     }
 
+    /**
+     * building a sample data structure by instantiating the classes previously created and
+     * displaying it on the console
+     * @throws ParseException
+     */
     static void Question1() throws ParseException {
         Item item1 = new Item("item1");
         itemRepository.create(item1);
@@ -60,10 +65,16 @@ public class Program {
 
         childrenQ1 = new ArrayList<>(List.of(child1, child2, child3));
 
+        System.out.println("Question1:");
         System.out.println(childrenQ1);
 
     }
 
+    /**
+     * creating an object structure based on the information in the files letter2_1, letter2_2, letter2_3
+     * @throws IOException
+     * @throws ParseException
+     */
     static void Question2() throws IOException, ParseException {
         List<Child> readChildren = new ArrayList<>();
 
@@ -77,6 +88,10 @@ public class Program {
        readChildren.forEach(child -> System.out.println(child.getName()));
     }
 
+    /**
+     * generating letter files following the letter template for each child in the data structure created at Question1
+     * but taking into account the information stored on each child
+     */
     //TODO befor running the first time: delete de old files
     static void Question3()
     {
@@ -85,6 +100,11 @@ public class Program {
         }
     }
 
+    /**
+     * builds a report for the Toy Factory, highlight how many of each toy the elves need to build
+     * the report is ordered descending by quantity
+     * @throws IOException
+     */
     static void Question4() throws IOException {
 
         Report report = new Report();
@@ -103,6 +123,9 @@ public class Program {
         System.out.println(report);
     }
 
+    /**
+     * explaining why we can apply Singleton Pattern in the current implementation
+     */
     static void Question5()
     {
         /*
@@ -114,6 +137,11 @@ public class Program {
     }
 
 
+    /**
+     * building Santa's travel itinerary, a list of all addresses, for every child in Santa's list,
+     * so that every address appears only once, and the addresses are grouped by the city - taking in consideration
+     * the county and country
+     */
     static void Question6()
     {
         List<String> travelItinerary = new ArrayList<>();
@@ -122,7 +150,7 @@ public class Program {
             travelItinerary.add(address);
         }
         List<String> travelItinerarySorted = travelItinerary.stream()
-                .distinct()
+                .distinct()                     //grouping by the city
                 .collect(groupingBy(elem -> elem.substring(elem.indexOf(", ", elem.indexOf(", ")+2)+2),LinkedHashMap::new, toList()))
                 .values().stream()
                 .flatMap(Collection::stream)
@@ -132,6 +160,11 @@ public class Program {
 
     }
 
+    /**
+     * checks if a item with the given name is already in the item repository, or it creates it and adds it to the repository
+     * @param presentName the name to be searched in the item repository
+     * @return the already existing or the newly created Item object, depending on the situation
+     */
     public static Item createOrGetItemFromRepository(String presentName){
         if(itemRepository.getAll().stream()
                 .noneMatch(item -> Objects.equals(item.getName(), presentName))){
@@ -147,6 +180,15 @@ public class Program {
         }
     }
 
+    /**
+     * From the information in a file with the structure of letter-template.txt,
+     * it creates a Child object, with the help of Santa's children list - for the child exact birthday
+     * The creation date of the letter file will be considered to be the date for the Letter object
+     * @param file the file from which we read the information
+     * @return the created child
+     * @throws IOException
+     * @throws ParseException
+     */
     public static Child createObjectsFromFile(File file) throws IOException, ParseException {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -166,8 +208,9 @@ public class Program {
         String behavior = "";
         BehaviorEnum behaviorEnum = null;
         Letter letter = null;
+
         int contor = 0;
-        while ((st = br.readLine()) != null) {
+        while ((st = br.readLine()) != null) {   //for every line in the file we extract the needed information
             contor++;
             if(contor==2){
                 name = st.substring(st.indexOf("I am")+5);
@@ -199,10 +242,16 @@ public class Program {
         return new Child(name,exactBirthDate, address, behaviorEnum, letter);
     }
 
+    /**
+     * creating a file with a unique name for a child, taking in consideration all information given
+     * - name, date of birth (from which we deduce the age), address, behaviour, and list of desired items
+     * @param child the child object for which we create the letter
+     */
     public static void createLetterFile(Child child){
         try {
             count++;
             File myObj = new File("src/com/company/letter3_"+ count+".txt");
+
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
@@ -216,6 +265,7 @@ public class Program {
                         "What I would like the most this Christmas is:\n" +
                         child.getLetter().getItemList().get(0).getName()+ "," + child.getLetter().getItemList().get(1).getName());
                 myWriter.close();
+
             } else {
                 System.out.println("File already exists.");
             }
@@ -225,6 +275,15 @@ public class Program {
         }
     }
 
+    /**
+     * Based on a letter file, which has the structure of letter-template.txt,
+     * it retrieves the information about the desired items and creates (or retrieves) the corresponding item
+     * in the item Repository, and then adds it to the report
+     * @see Report#addItem(Item)
+     * @param report the report in which we add the information from the file
+     * @param file the file from which we retrieve the name of the items
+     * @throws IOException
+     */
     static void buildReport(Report report, File file) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
 

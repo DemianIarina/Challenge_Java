@@ -35,7 +35,8 @@ public class SantaClaus {
     }
 
     /**
-     *
+     * Reads all children from Santa's children file, and adds them to his list
+     * Every child will have his name, birthdate and address saved
      */
     public void readChildren(){
         try {
@@ -58,7 +59,7 @@ public class SantaClaus {
 
     /**
      * if a new child is born and Santa needs to add him to his children list
-     * @param newChild the new born child
+     * @param newChild the newborn child
      */
     public void addChild(Child newChild){
         if(children.stream()

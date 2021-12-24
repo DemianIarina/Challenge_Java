@@ -3,6 +3,10 @@ package com.company.Entities;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Represents one row of the report, containing the name of the item to be produced and the quantity
+ * When a row is first created, it will have the quantity set to 1
+ */
 public class ReportRow {
     private String toyName;
     private int quantity;
