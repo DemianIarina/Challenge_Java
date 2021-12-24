@@ -36,9 +36,8 @@ public class Program {
     /**
      * building a sample data structure by instantiating the classes previously created and
      * displaying it on the console
-     * @throws ParseException
      */
-    static void Question1() throws ParseException {
+    static void Question1(){
         Item item1 = new Item("item1");
         itemRepository.create(item1);
         Item item2 = new Item("item2");
@@ -52,40 +51,54 @@ public class Program {
         Item item6 = new Item("item6");
         itemRepository.create(item6);
 
-        Letter letter1_1 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-1"), List.of(item1, item2));
-        Letter letter1_2 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-11"), List.of(item3, item4));
-        Letter letter1_3 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-15"), List.of(item5, item6));
+        try {
+            Letter letter1_1 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-1"), List.of(item1, item2));
+            Letter letter1_2 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-11"), List.of(item3, item4));
+            Letter letter1_3 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-15"), List.of(item5, item6));
 
-        Child child1 = new Child("Ion Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
-                "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_1);
-        Child child2 = new Child("Maria Pop" , new SimpleDateFormat("yyyy-MM-dd").parse("2007-5-6"),
-                "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_2);
-        Child child3 = new Child("Giorgi Mihalache",  new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
-                "str. Eroilor, nr. 123, Floresti, Cluj, Romania", BehaviorEnum.BAD, letter1_3);
+            Child child1 = new Child("Ion Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
+                    "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_1);
+            Child child2 = new Child("Maria Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2007-5-6"),
+                    "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_2);
+            Child child3 = new Child("Giorgi Mihalache", new SimpleDateFormat("yyyy-MM-dd").parse("2006-8-18"),
+                    "str. Eroilor, nr. 123, Floresti, Cluj, Romania", BehaviorEnum.BAD, letter1_3);
 
-        childrenQ1 = new ArrayList<>(List.of(child1, child2, child3));
+            childrenQ1 = new ArrayList<>(List.of(child1, child2, child3));
 
-        System.out.println("Question1:");
-        System.out.println(childrenQ1);
+            System.out.println("Question1:");
+            System.out.println(childrenQ1);
+        }
+        catch (ParseException e) {
+            System.out.println("Error occurred while parsing");
+            e.printStackTrace();
+        }
 
     }
 
     /**
      * creating an object structure based on the information in the files letter2_1, letter2_2, letter2_3
-     * @throws IOException
-     * @throws ParseException
      */
-    static void Question2() throws IOException, ParseException {
+    static void Question2(){
         List<Child> readChildren = new ArrayList<>();
 
-        File file1 = new File("src/com/company/letter2_1.txt");
-        readChildren.add(createObjectsFromFile(file1));
-        File file2 = new File("src/com/company/letter2_2.txt");
-        readChildren.add(createObjectsFromFile(file2));
-        File file3 = new File("src/com/company/letter2_3.txt");
-        readChildren.add(createObjectsFromFile(file3));
+        try {
+            File file1 = new File("src/com/company/letter2_1.txt");
+            readChildren.add(createObjectsFromFile(file1));
+            File file2 = new File("src/com/company/letter2_2.txt");
+            readChildren.add(createObjectsFromFile(file2));
+            File file3 = new File("src/com/company/letter2_3.txt");
+            readChildren.add(createObjectsFromFile(file3));
 
-       readChildren.forEach(child -> System.out.println(child.getName()));
+            readChildren.forEach(child -> System.out.println(child.getName()));
+        }
+        catch (IOException e) {
+            System.out.println("Error occurred while working with the file");
+            e.printStackTrace();
+        }
+        catch (ParseException e) {
+            System.out.println("Error occurred while parsing");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -103,24 +116,30 @@ public class Program {
     /**
      * builds a report for the Toy Factory, highlight how many of each toy the elves need to build
      * the report is ordered descending by quantity
-     * @throws IOException
      */
-    static void Question4() throws IOException {
+    static void Question4(){
 
         Report report = new Report();
-        File file1 = new File("src/com/company/letter2_1.txt");
-        File file2 = new File("src/com/company/letter2_2.txt");
-        File file3 = new File("src/com/company/letter2_3.txt");
-        File file4 = new File("src/com/company/letter3_1.txt");
-        File file5 = new File("src/com/company/letter3_2.txt");
-        File file6 = new File("src/com/company/letter3_3.txt");
-        buildReport(report,file1);
-        buildReport(report,file2);
-        buildReport(report,file3);
-        buildReport(report,file4);
-        buildReport(report,file5);
-        buildReport(report,file6);
-        System.out.println(report);
+        try{
+            File file1 = new File("src/com/company/letter2_1.txt");
+            File file2 = new File("src/com/company/letter2_2.txt");
+            File file3 = new File("src/com/company/letter2_3.txt");
+            File file4 = new File("src/com/company/letter3_1.txt");
+            File file5 = new File("src/com/company/letter3_2.txt");
+            File file6 = new File("src/com/company/letter3_3.txt");
+            buildReport(report,file1);
+            buildReport(report,file2);
+            buildReport(report,file3);
+            buildReport(report,file4);
+            buildReport(report,file5);
+            buildReport(report,file6);
+            System.out.println(report);
+        }
+        catch (IOException e) {
+            System.out.println("Error occurred while working with the file");
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -161,7 +180,7 @@ public class Program {
     }
 
     /**
-     * checks if a item with the given name is already in the item repository, or it creates it and adds it to the repository
+     * checks if an item with the given name is already in the item repository, or it creates it and adds it to the repository
      * @param presentName the name to be searched in the item repository
      * @return the already existing or the newly created Item object, depending on the situation
      */
@@ -186,8 +205,8 @@ public class Program {
      * The creation date of the letter file will be considered to be the date for the Letter object
      * @param file the file from which we read the information
      * @return the created child
-     * @throws IOException
-     * @throws ParseException
+     * @throws IOException if errors occurred while reading from the file
+     * @throws ParseException if the date can not be successfully parsed
      */
     public static Child createObjectsFromFile(File file) throws IOException, ParseException {
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -270,7 +289,7 @@ public class Program {
                 System.out.println("File already exists.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred while using the files");
             e.printStackTrace();
         }
     }
@@ -282,7 +301,7 @@ public class Program {
      * @see Report#addItem(Item)
      * @param report the report in which we add the information from the file
      * @param file the file from which we retrieve the name of the items
-     * @throws IOException
+     * @throws IOException if errors occurred while reading form file
      */
     static void buildReport(Report report, File file) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
