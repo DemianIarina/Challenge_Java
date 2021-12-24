@@ -34,9 +34,8 @@ public class ReportRow {
 
     @Override
     public String toString() {
-        return "ReportRow{" +
-                "toyName='" + toyName + '\'' +
-                ", quantity=" + quantity +
+        return "{toyName='" + toyName + '\'' +
+                " - quantity=" + quantity +
                 '}';
     }
 

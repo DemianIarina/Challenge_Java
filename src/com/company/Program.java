@@ -46,15 +46,11 @@ public class Program {
         itemRepository.create(item3);
         Item item4 = new Item("item4");
         itemRepository.create(item4);
-        Item item5 = new Item("item5");
-        itemRepository.create(item5);
-        Item item6 = new Item("item6");
-        itemRepository.create(item6);
 
         try {
             Letter letter1_1 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-1"), List.of(item1, item2));
-            Letter letter1_2 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-11"), List.of(item3, item4));
-            Letter letter1_3 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-15"), List.of(item5, item6));
+            Letter letter1_2 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-11"), List.of(item3, item2));
+            Letter letter1_3 = new Letter(new SimpleDateFormat("yyyy-MM-dd").parse("2021-12-15"), List.of(item4, item2));
 
             Child child1 = new Child("Ion Pop", new SimpleDateFormat("yyyy-MM-dd").parse("2006-05-11"),
                     "str.Somesului, nr. 2B, Cluj-Napoca, Cluj, Romania", BehaviorEnum.GOOD, letter1_1);
@@ -89,6 +85,7 @@ public class Program {
             File file3 = new File("src/com/company/letter2_3.txt");
             readChildren.add(createObjectsFromFile(file3));
 
+            System.out.println("Question2:");
             readChildren.forEach(child -> System.out.println(child.getName()));
         }
         catch (IOException e) {
@@ -105,9 +102,9 @@ public class Program {
      * generating letter files following the letter template for each child in the data structure created at Question1
      * but taking into account the information stored on each child
      */
-    //TODO befor running the first time: delete de old files
     static void Question3()
     {
+        System.out.println("Question3:");
         for(Child child :childrenQ1){
             createLetterFile(child);
         }
@@ -133,6 +130,8 @@ public class Program {
             buildReport(report,file4);
             buildReport(report,file5);
             buildReport(report,file6);
+
+            System.out.println("Question4:");
             System.out.println(report);
         }
         catch (IOException e) {
@@ -175,6 +174,7 @@ public class Program {
                 .flatMap(Collection::stream)
                 .collect(toList());
 
+        System.out.println("Question6:");
         System.out.println(travelItinerarySorted);
 
     }
